@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/", "destination": "/OCR_CompSci_Components_Guide.html" }]
+}
