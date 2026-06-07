@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCR A-Level Computer Science — Component 01 Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Spline+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F2EA;
+    --paper-2:#FBF8F2;
+    --ink:#211E1B;
+    --ink-soft:#4A453E;
+    --accent:#0E5A54;       /* deep teal */
+    --accent-2:#9C3B2E;     /* oxblood */
+    --y1:#2E7D4F;           /* AS / Year 1 */
+    --y1-bg:#E4F0E7;
+    --y2:#B23A3A;           /* A-level only / Year 2 */
+    --y2-bg:#F6E3E0;
+    --line:#D9D1C2;
+    --shadow:0 1px 0 rgba(0,0,0,.04), 0 8px 24px -16px rgba(33,30,27,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Spline Sans",system-ui,sans-serif;
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+
+  /* ---- Masthead ---- */
+  header.mast{
+    background:linear-gradient(180deg,#0E5A54 0%, #0b4a45 100%);
+    color:#F6F2EA;padding:54px 0 46px;border-bottom:5px solid var(--accent-2);
+  }
+  .mast .eyebrow{font-family:"JetBrains Mono",monospace;letter-spacing:.28em;
+    text-transform:uppercase;font-size:12px;opacity:.85;margin:0 0 14px}
+  .mast h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,6vw,56px);
+    line-height:1.02;margin:0 0 14px;letter-spacing:-.01em}
+  .mast p.sub{font-size:18px;max-width:640px;margin:0;opacity:.92}
+  .mast .meta{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:12.5px;
+    opacity:.8;display:flex;gap:22px;flex-wrap:wrap}
+
+  /* ---- Legend ---- */
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0 4px}
+  .legend .pill{display:flex;align-items:center;gap:9px;background:var(--paper-2);
+    border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:14px}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;
+    padding:3px 8px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+  .tag.y1{background:var(--y1-bg);color:var(--y1)}
+  .tag.y2{background:var(--y2-bg);color:var(--y2)}
+
+  /* ---- TOC ---- */
+  nav.toc{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
+    padding:24px 26px;margin:30px 0;box-shadow:var(--shadow)}
+  nav.toc h2{font-family:"Fraunces",serif;font-size:20px;margin:0 0 14px;font-weight:600}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:34px}
+  @media(max-width:640px){nav.toc ol{columns:1}}
+  nav.toc li{margin:5px 0;break-inside:avoid}
+  nav.toc a{color:var(--accent);text-decoration:none;font-size:15px}
+  nav.toc a:hover{text-decoration:underline}
+  nav.toc code{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft)}
+
+  /* ---- Sections ---- */
+  section{padding:38px 0;border-top:1px solid var(--line)}
+  .spec-no{font-family:"JetBrains Mono",monospace;color:var(--accent-2);
+    font-size:13px;font-weight:700;letter-spacing:.12em}
+  h2.sec{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,4vw,36px);
+    margin:6px 0 18px;line-height:1.08;letter-spacing:-.01em}
+  h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:30px 0 8px;
+    display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+  h4{font-family:"Spline Sans";font-weight:700;font-size:16px;margin:20px 0 6px;color:var(--accent)}
+  p{margin:10px 0}
+  ul,ol.body{margin:10px 0;padding-left:22px}
+  li{margin:5px 0}
+  strong{font-weight:700}
+  em{font-style:italic}
+  .lead{font-size:18px;color:var(--ink-soft)}
+
+  /* ---- Definition callout ---- */
+  .def{background:var(--paper-2);border-left:4px solid var(--accent);
+    border-radius:0 12px 12px 0;padding:16px 20px;margin:16px 0;box-shadow:var(--shadow)}
+  .def .lab{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+  .def p{margin:0}
+  .def .term{font-weight:700}
+
+  /* ---- Example / note boxes ---- */
+  .box{border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:16px 0;background:#fff}
+  .box .lab{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);display:block;margin-bottom:8px}
+  .box.tip{background:#FFFBEF;border-color:#E8DCB0}
+  .box.tip .lab{color:#9A7B16}
+  .box.exam{background:#EFF5F4;border-color:#C3DBD8}
+  .box.exam .lab{color:var(--accent)}
+
+  code,.mono{font-family:"JetBrains Mono",monospace;font-size:.9em;
+    background:#ECE6DA;padding:1.5px 6px;border-radius:5px}
+  pre{font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.5;
+    background:#211E1B;color:#F0EAD8;padding:16px 18px;border-radius:12px;overflow-x:auto;margin:14px 0}
+  pre .c{color:#9aa39a}
+
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14.5px;background:#fff;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDE7DB;font-weight:700;font-size:13px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+
+  figure{margin:22px 0;text-align:center}
+  figure svg{max-width:100%;height:auto;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+  figcaption{font-size:13px;color:var(--ink-soft);margin-top:9px;font-style:italic}
+
+  .key{display:inline-block;background:var(--accent);color:#fff;font-family:"JetBrains Mono",monospace;
+    font-size:11px;padding:2px 8px;border-radius:5px;letter-spacing:.04em}
+
+  footer{padding:46px 0 70px;color:var(--ink-soft);font-size:14px;border-top:1px solid var(--line)}
+  a.back{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent);text-decoration:none}
+  @media print{header.mast{background:#0E5A54 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    nav.toc{break-after:page} section{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Cambridge OCR · H446 · Component 01</p>
+    <h1>Computer Systems —<br>The Complete Study Guide</h1>
+    <p class="sub">Every topic you listed, written in OCR-aligned language with examiner-ready definitions, worked examples and diagrams. Built for mocks.</p>
+    <div class="meta">
+      <span>SPEC v3.0 (2026)</span><span>AS = Year 1 · A-LEVEL ONLY = Year 2</span><span>NO CALCULATOR PAPER</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="legend">
+    <div class="pill"><span class="tag y1">YEAR 1</span> In the AS (H046) spec — foundation year</div>
+    <div class="pill"><span class="tag y2">YEAR 2</span> A-level only (H446) — not in AS</div>
+  </div>
+  <p style="font-size:14px;color:var(--ink-soft);margin-top:10px">Tags mark which <em>half of the spec</em> a point belongs to, verified against both official OCR documents — not a prediction of what you've personally covered. You may well have met some Year-2 material early (De Morgan's, for example).</p>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s111"><code>1.1.1</code> Structure &amp; function of the processor</a></li>
+      <li><a href="#s112"><code>1.1.2</code> Types of processor</a></li>
+      <li><a href="#s113"><code>1.1.3</code> Input, output &amp; storage</a></li>
+      <li><a href="#s121"><code>1.2.1</code> Systems software</a></li>
+      <li><a href="#s122"><code>1.2.2</code> Applications generation</a></li>
+      <li><a href="#s123"><code>1.2.3</code> Software development</a></li>
+      <li><a href="#s124"><code>1.2.4</code> Types of programming language</a></li>
+      <li><a href="#s221"><code>2.2.1</code> Programming techniques</a></li>
+      <li><a href="#oop">OOP — classes, inheritance &amp; more</a></li>
+      <li><a href="#s131"><code>1.3.1</code> Compression, encryption &amp; hashing</a></li>
+      <li><a href="#s132"><code>1.3.2</code> Databases</a></li>
+      <li><a href="#s134"><code>1.3.4</code> Web technologies</a></li>
+      <li><a href="#s141"><code>1.4.1</code> Data types &amp; representation</a></li>
+      <li><a href="#s143"><code>1.4.3</code> Boolean algebra</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===================== 1.1.1 ===================== -->
+  <section id="s111">
+    <span class="spec-no">1.1.1</span>
+    <h2 class="sec">Structure &amp; function of the processor</h2>
+    <p class="lead">The CPU is the brain of the computer: it fetches instructions from memory, decodes them and executes them, over and over, billions of times a second.</p>
+
+    <h3>The components <span class="tag y1">Y1</span></h3>
+    <p>The processor is built from the <strong>ALU</strong>, the <strong>Control Unit</strong>, and a set of <strong>registers</strong>, connected to memory by three <strong>buses</strong>.</p>
+
+    <div class="def"><span class="lab">OCR Definition — ALU</span><p><span class="term">Arithmetic and Logic Unit:</span> the part of the processor that carries out all <em>arithmetic</em> calculations (add, subtract, multiply, shifts) and all <em>logical</em> operations (AND, OR, NOT, comparisons). It is also where the <strong>accumulator</strong> sits.</p></div>
+    <div class="def"><span class="lab">OCR Definition — Control Unit</span><p><span class="term">Control Unit (CU):</span> coordinates and controls the activities of the processor. It directs the flow of data around the CPU, decodes each instruction, and sends control signals to manage the fetch–decode–execute cycle.</p></div>
+
+    <h4>The registers (learn these cold)</h4>
+    <table>
+      <tr><th>Register</th><th>Full name</th><th>Job</th></tr>
+      <tr><td><strong>PC</strong></td><td>Program Counter</td><td>Holds the <em>address</em> of the <strong>next</strong> instruction to be fetched. Increments each cycle (or is overwritten by a jump).</td></tr>
+      <tr><td><strong>MAR</strong></td><td>Memory Address Register</td><td>Holds the <em>address</em> in memory that is about to be read from or written to.</td></tr>
+      <tr><td><strong>MDR</strong></td><td>Memory Data Register</td><td>Holds the <em>data or instruction</em> just fetched from memory, or about to be written to memory. (The "gateway" between CPU and memory.)</td></tr>
+      <tr><td><strong>CIR</strong></td><td>Current Instruction Register</td><td>Holds the <em>current instruction</em> being decoded and executed.</td></tr>
+      <tr><td><strong>ACC</strong></td><td>Accumulator</td><td>Stores the <em>result</em> of calculations performed by the ALU.</td></tr>
+    </table>
+
+    <h4>The three buses</h4>
+    <p>A <strong>bus</strong> is a set of parallel wires that transfers data between components. The <strong>width</strong> of a bus = the number of bits it can carry at once.</p>
+    <ul>
+      <li><strong>Data bus</strong> — carries data and instructions between CPU and memory. <em>Bidirectional</em>.</li>
+      <li><strong>Address bus</strong> — carries the address of the memory location to access. <em>Unidirectional</em> (CPU → memory). Its width sets the maximum addressable memory (n wires → 2<sup>n</sup> addresses).</li>
+      <li><strong>Control bus</strong> — carries control signals/timing (e.g. read, write, interrupt). <em>Bidirectional</em>.</li>
+    </ul>
+
+    <figure>
+      <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+        <rect x="20" y="30" width="380" height="280" rx="12" fill="#EFF5F4" stroke="#0E5A54" stroke-width="2"/>
+        <text x="36" y="54" font-size="14" font-weight="700" fill="#0E5A54">CPU</text>
+        <rect x="44" y="70" width="150" height="60" rx="8" fill="#fff" stroke="#211E1B"/>
+        <text x="119" y="96" font-size="13" text-anchor="middle" fill="#211E1B">Control Unit</text>
+        <text x="119" y="114" font-size="11" text-anchor="middle" fill="#4A453E">(decode + signals)</text>
+        <rect x="228" y="70" width="150" height="60" rx="8" fill="#fff" stroke="#211E1B"/>
+        <text x="303" y="96" font-size="13" text-anchor="middle" fill="#211E1B">ALU</text>
+        <text x="303" y="114" font-size="11" text-anchor="middle" fill="#4A453E">arithmetic + logic</text>
+        <rect x="44" y="160" width="334" height="124" rx="8" fill="#fff" stroke="#211E1B"/>
+        <text x="60" y="182" font-size="12" font-weight="700" fill="#9C3B2E">REGISTERS</text>
+        <text x="62" y="206" font-size="12" fill="#211E1B">PC · MAR · MDR</text>
+        <text x="62" y="228" font-size="12" fill="#211E1B">CIR · ACC</text>
+        <text x="230" y="206" font-size="11" fill="#4A453E">tiny, ultra-fast</text>
+        <text x="230" y="224" font-size="11" fill="#4A453E">on-chip storage</text>
+
+        <rect x="540" y="100" width="160" height="150" rx="12" fill="#F6E3E0" stroke="#9C3B2E" stroke-width="2"/>
+        <text x="620" y="92" font-size="13" font-weight="700" text-anchor="middle" fill="#9C3B2E">MAIN MEMORY</text>
+        <text x="620" y="172" font-size="12" text-anchor="middle" fill="#211E1B">(RAM)</text>
+        <text x="620" y="192" font-size="11" text-anchor="middle" fill="#4A453E">instructions + data</text>
+
+        <line x1="400" y1="150" x2="540" y2="150" stroke="#0E5A54" stroke-width="3"/><text x="470" y="143" font-size="10" text-anchor="middle" fill="#0E5A54">ADDRESS ▶</text>
+        <line x1="400" y1="180" x2="540" y2="180" stroke="#211E1B" stroke-width="3"/><text x="470" y="173" font-size="10" text-anchor="middle" fill="#211E1B">◀ DATA ▶</text>
+        <line x1="400" y1="210" x2="540" y2="210" stroke="#9C3B2E" stroke-width="3"/><text x="470" y="203" font-size="10" text-anchor="middle" fill="#9C3B2E">◀ CONTROL ▶</text>
+      </svg>
+      <figcaption>The processor and its connection to memory via the three buses.</figcaption>
+    </figure>
+
+    <h3>The Fetch–Decode–Execute cycle <span class="tag y1">Y1</span></h3>
+    <p>This is the continuous cycle the CPU repeats to run a program. Learn the <strong>register transfers</strong> — examiners love them.</p>
+    <pre><span class="c">// FETCH</span>
+[PC]      → MAR        <span class="c">address of next instruction copied to MAR</span>
+[MAR]     → address bus → memory
+memory    → data bus → MDR   <span class="c">instruction fetched into MDR</span>
+[MDR]     → CIR        <span class="c">instruction copied to CIR</span>
+PC        → PC + 1     <span class="c">PC incremented, ready for next</span>
+<span class="c">// DECODE</span>
+Control Unit decodes the instruction held in the CIR
+<span class="c">// EXECUTE</span>
+instruction carried out (e.g. ALU operates, result → ACC)</pre>
+
+    <figure>
+      <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif">
+        <rect x="20" y="70" width="160" height="64" rx="10" fill="#E4F0E7" stroke="#2E7D4F" stroke-width="2"/>
+        <text x="100" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#2E7D4F">FETCH</text>
+        <text x="100" y="118" font-size="11" text-anchor="middle" fill="#4A453E">get instruction</text>
+        <rect x="240" y="70" width="160" height="64" rx="10" fill="#EFF5F4" stroke="#0E5A54" stroke-width="2"/>
+        <text x="320" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#0E5A54">DECODE</text>
+        <text x="320" y="118" font-size="11" text-anchor="middle" fill="#4A453E">interpret it</text>
+        <rect x="460" y="70" width="160" height="64" rx="10" fill="#F6E3E0" stroke="#9C3B2E" stroke-width="2"/>
+        <text x="540" y="98" font-size="15" font-weight="700" text-anchor="middle" fill="#9C3B2E">EXECUTE</text>
+        <text x="540" y="118" font-size="11" text-anchor="middle" fill="#4A453E">carry it out</text>
+        <path d="M180 102 L236 102" stroke="#211E1B" stroke-width="2" marker-end="url(#a)"/>
+        <path d="M400 102 L456 102" stroke="#211E1B" stroke-width="2" marker-end="url(#a)"/>
+        <path d="M540 134 C540 180, 100 180, 100 138" fill="none" stroke="#211E1B" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+        <text x="320" y="174" font-size="11" text-anchor="middle" fill="#4A453E">repeat for next instruction</text>
+        <defs><marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#211E1B"/></marker></defs>
+      </svg>
+    </figure>
+
+    <h3>Factors affecting CPU performance <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>Clock speed</strong> (Hz) — number of cycles per second. Higher clock = more instructions per second. A 3 GHz CPU has 3 billion cycles/sec.</li>
+      <li><strong>Number of cores</strong> — each core can fetch–decode–execute independently, so more cores allow more instructions to be processed <em>at the same time</em> — <strong>but only if</strong> the software is written to use them (parallelisable).</li>
+      <li><strong>Cache</strong> — small, very fast memory on/near the CPU holding frequently/recently used data and instructions, so the CPU avoids slow trips to RAM. More/larger cache (L1→L2→L3, L1 fastest &amp; smallest) generally improves performance.</li>
+    </ul>
+    <div class="box tip"><span class="lab">Exam trap</span>Doubling the cores does <em>not</em> double speed: a single-threaded program can only run on one core, and there is overhead splitting/recombining tasks.</div>
+
+    <h3>Pipelining <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Pipelining:</span> a technique where the processor begins fetching the next instruction while it is still decoding/executing previous ones — the stages of the FDE cycle <em>overlap</em>. This keeps all parts of the CPU busy and improves throughput.</p></div>
+    <figure>
+      <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+        <text x="20" y="30" fill="#4A453E">Time ▶</text>
+        <g>
+          <rect x="90" y="40" width="80" height="26" fill="#E4F0E7" stroke="#2E7D4F"/><text x="130" y="58" text-anchor="middle">F</text>
+          <rect x="170" y="40" width="80" height="26" fill="#EFF5F4" stroke="#0E5A54"/><text x="210" y="58" text-anchor="middle">D</text>
+          <rect x="250" y="40" width="80" height="26" fill="#F6E3E0" stroke="#9C3B2E"/><text x="290" y="58" text-anchor="middle">E</text>
+          <text x="50" y="58">Instr 1</text>
+        </g>
+        <g>
+          <rect x="170" y="70" width="80" height="26" fill="#E4F0E7" stroke="#2E7D4F"/><text x="210" y="88" text-anchor="middle">F</text>
+          <rect x="250" y="70" width="80" height="26" fill="#EFF5F4" stroke="#0E5A54"/><text x="290" y="88" text-anchor="middle">D</text>
+          <rect x="330" y="70" width="80" height="26" fill="#F6E3E0" stroke="#9C3B2E"/><text x="370" y="88" text-anchor="middle">E</text>
+          <text x="50" y="88">Instr 2</text>
+        </g>
+        <g>
+          <rect x="250" y="100" width="80" height="26" fill="#E4F0E7" stroke="#2E7D4F"/><text x="290" y="118" text-anchor="middle">F</text>
+          <rect x="330" y="100" width="80" height="26" fill="#EFF5F4" stroke="#0E5A54"/><text x="370" y="118" text-anchor="middle">D</text>
+          <rect x="410" y="100" width="80" height="26" fill="#F6E3E0" stroke="#9C3B2E"/><text x="450" y="118" text-anchor="middle">E</text>
+          <text x="50" y="118">Instr 3</text>
+        </g>
+        <text x="120" y="150" fill="#4A453E">While Instr 1 is decoded, Instr 2 is fetched — no idle units.</text>
+      </svg>
+      <figcaption>Overlapping FDE stages: three instructions in flight at once.</figcaption>
+    </figure>
+
+    <h3>Processor architectures <span class="tag y1">Y1</span></h3>
+    <div class="def"><span class="lab">OCR Definition — Von Neumann</span><p><span class="term">Von Neumann architecture:</span> uses a <strong>single</strong> memory and a <strong>shared bus</strong> for both instructions and data (the <em>stored program concept</em>). Simpler and cheaper, but the shared bus creates a bottleneck (the "von Neumann bottleneck").</p></div>
+    <div class="def"><span class="lab">OCR Definition — Harvard</span><p><span class="term">Harvard architecture:</span> uses <strong>separate</strong> memories and <strong>separate buses</strong> for instructions and data. Instructions and data can be fetched simultaneously — faster, used in embedded systems and DSPs, but more complex/expensive.</p></div>
+    <p><strong>Contemporary</strong> processors are largely von Neumann but borrow Harvard ideas (e.g. separate L1 instruction and data caches) plus pipelining and multiple cores.</p>
+    <figure>
+      <svg viewBox="0 0 660 180" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif" font-size="12">
+        <text x="20" y="24" font-weight="700" fill="#0E5A54">Von Neumann</text>
+        <rect x="20" y="40" width="90" height="44" rx="8" fill="#EFF5F4" stroke="#0E5A54"/><text x="65" y="66" text-anchor="middle">CPU</text>
+        <rect x="200" y="40" width="110" height="44" rx="8" fill="#F6E3E0" stroke="#9C3B2E"/><text x="255" y="60" text-anchor="middle">Memory</text><text x="255" y="76" text-anchor="middle" font-size="10">data + instr</text>
+        <line x1="110" y1="62" x2="200" y2="62" stroke="#211E1B" stroke-width="3"/><text x="155" y="54" text-anchor="middle" font-size="10">1 shared bus</text>
+
+        <text x="380" y="24" font-weight="700" fill="#9C3B2E">Harvard</text>
+        <rect x="380" y="55" width="90" height="44" rx="8" fill="#EFF5F4" stroke="#0E5A54"/><text x="425" y="81" text-anchor="middle">CPU</text>
+        <rect x="560" y="22" width="90" height="40" rx="8" fill="#E4F0E7" stroke="#2E7D4F"/><text x="605" y="46" text-anchor="middle" font-size="11">Instr mem</text>
+        <rect x="560" y="92" width="90" height="40" rx="8" fill="#F6E3E0" stroke="#9C3B2E"/><text x="605" y="116" text-anchor="middle" font-size="11">Data mem</text>
+        <line x1="470" y1="68" x2="560" y2="44" stroke="#2E7D4F" stroke-width="3"/>
+        <line x1="470" y1="86" x2="560" y2="110" stroke="#9C3B2E" stroke-width="3"/>
+        <text x="470" y="150" font-size="10" fill="#4A453E">two separate buses → simultaneous fetch</text>
+      </svg>
+    </figure>
+    <a class="back" href="#s111">↑</a>
+  </section>
+  </div>
+
+  <div class="wrap">
+
+  <!-- ===================== 1.1.2 ===================== -->
+  <section id="s112">
+    <span class="spec-no">1.1.2</span>
+    <h2 class="sec">Types of processor</h2>
+
+    <h3>CISC vs RISC <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th></th><th>CISC</th><th>RISC</th></tr>
+      <tr><td>Stands for</td><td>Complex Instruction Set Computer</td><td>Reduced Instruction Set Computer</td></tr>
+      <tr><td>Instructions</td><td>Large set of complex instructions; one instruction may take several clock cycles</td><td>Small set of simple instructions; most execute in a single clock cycle</td></tr>
+      <tr><td>Complexity sits in…</td><td>the <strong>hardware</strong></td><td>the <strong>compiler/software</strong></td></tr>
+      <tr><td>Power &amp; heat</td><td>Higher</td><td>Lower — better for batteries</td></tr>
+      <tr><td>Pipelining</td><td>Harder (variable-length instructions)</td><td>Easier (uniform instructions)</td></tr>
+      <tr><td>Typical use</td><td>Desktops/laptops (x86)</td><td>Phones, tablets, embedded (ARM)</td></tr>
+    </table>
+
+    <h3>GPUs <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">GPU (Graphics Processing Unit):</span> a processor with many cores specialised for performing the <strong>same operation on large amounts of data simultaneously</strong> (highly parallel arithmetic).</p></div>
+    <p>Originally for rendering graphics, GPUs are now used for any task with lots of parallel, repetitive calculations: <strong>machine learning / AI training, scientific simulations, image &amp; video processing, and cryptocurrency mining</strong>.</p>
+
+    <h3>Multicore &amp; parallel systems <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>Multicore</strong> — multiple complete processing cores on one chip; each can run a separate thread/process, enabling true parallel execution.</li>
+      <li><strong>Parallel processing</strong> — multiple instructions carried out simultaneously, across multiple cores or multiple processors.</li>
+      <li><strong>Limitation:</strong> the problem must be <em>divisible</em> into independent parts; not all tasks parallelise, and there is overhead managing the split.</li>
+    </ul>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.1.3 ===================== -->
+  <section id="s113">
+    <span class="spec-no">1.1.3</span>
+    <h2 class="sec">Input, output &amp; storage <span class="tag y1">Y1</span></h2>
+    <p class="lead">You must be able to <strong>recommend and justify</strong> a device for a scenario — you don't need to know how they physically work.</p>
+
+    <h3>The three storage technologies</h3>
+    <table>
+      <tr><th>Type</th><th>How it stores</th><th>Examples</th><th>Notes</th></tr>
+      <tr><td><strong>Magnetic</strong></td><td>Magnetised regions on spinning platters</td><td>HDD, magnetic tape</td><td>Cheap per GB, high capacity, moving parts → slower &amp; less durable</td></tr>
+      <tr><td><strong>Flash (solid state)</strong></td><td>Electrically in flash memory cells (no moving parts)</td><td>SSD, USB stick, SD card</td><td>Fast, durable, silent, low power; more expensive per GB</td></tr>
+      <tr><td><strong>Optical</strong></td><td>Pits &amp; lands read by a laser</td><td>CD, DVD, Blu-ray</td><td>Cheap, portable, low capacity; good for distribution</td></tr>
+    </table>
+
+    <h3>RAM vs ROM</h3>
+    <table>
+      <tr><th></th><th>RAM</th><th>ROM</th></tr>
+      <tr><td>Volatile?</td><td><strong>Volatile</strong> — loses contents when power off</td><td><strong>Non-volatile</strong> — keeps contents without power</td></tr>
+      <tr><td>Read/Write</td><td>Read and write</td><td>Read-only (in normal use)</td></tr>
+      <tr><td>Holds</td><td>Currently-running programs &amp; data (OS, open apps)</td><td>Start-up instructions, e.g. the <strong>BIOS/bootloader</strong></td></tr>
+    </table>
+
+    <h3>Virtual storage <span class="tag y1">Y1</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Virtual storage:</span> storage that appears to be local but is physically located elsewhere — typically on a network/remote server or in the cloud. Benefits: access from anywhere, easy sharing, scalable. Drawbacks: needs an internet connection, security/privacy concerns, ongoing cost.</p></div>
+    <div class="box tip"><span class="lab">Don't confuse</span><strong>Virtual storage</strong> (remote files, e.g. cloud) ≠ <strong>virtual memory</strong> (using secondary storage to extend RAM — see Systems Software).</div>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.2.1 ===================== -->
+  <section id="s121">
+    <span class="spec-no">1.2.1</span>
+    <h2 class="sec">Systems software <span class="tag y1">Y1</span></h2>
+
+    <h3>Purpose of an operating system</h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Operating System (OS):</span> software that manages the hardware and resources of a computer and provides a platform on which application software can run.</p></div>
+    <p><strong>Key OS jobs:</strong> memory management, processor/process scheduling, interrupt handling, file management, security/user accounts, providing a user interface, managing input/output and peripherals (via drivers), and providing utilities.</p>
+
+    <h3>Memory management</h3>
+    <h4>Paging</h4>
+    <p>Memory is divided into equal, <strong>fixed-size</strong> blocks called <strong>pages</strong>; physical memory is divided into <strong>frames</strong> of the same size. Pages can be swapped between RAM and disk. Fixed size makes management simple but can waste space (internal fragmentation).</p>
+    <h4>Segmentation</h4>
+    <p>Memory is divided into <strong>variable-size</strong>, <em>logical</em> blocks called <strong>segments</strong> that reflect the structure of the program (e.g. a whole function/module). Sizes vary.</p>
+    <h4>Virtual memory</h4>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Virtual memory:</span> a section of secondary storage (e.g. the hard disk) used as if it were RAM. Pages not currently needed are moved out to disk, allowing programs larger than physical RAM to run.</p></div>
+    <div class="box tip"><span class="lab">Exam trap</span>Excessive swapping of pages between RAM and disk is called <strong>disk thrashing</strong> — it slows the system because disk access is far slower than RAM.</div>
+
+    <h3>Interrupts &amp; the ISR</h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Interrupt:</span> a signal sent to the processor requesting its attention, generated by hardware or software, that may cause the CPU to temporarily stop what it is doing to deal with the event.</p></div>
+    <p>Interrupts have <strong>priorities</strong>. At the end of each FDE cycle the CPU checks the <strong>interrupt register</strong>. If a higher-priority interrupt is present:</p>
+    <ol class="body">
+      <li>The contents of registers (the current state) are saved onto a <strong>stack</strong>.</li>
+      <li>The relevant <strong>Interrupt Service Routine (ISR)</strong> is loaded and run.</li>
+      <li>When finished, the saved state is restored (popped off the stack) and the interrupted program continues.</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif" font-size="12">
+        <rect x="20" y="80" width="120" height="44" rx="8" fill="#EFF5F4" stroke="#0E5A54"/><text x="80" y="106" text-anchor="middle">Program running</text>
+        <rect x="180" y="80" width="120" height="44" rx="8" fill="#FFFBEF" stroke="#9A7B16"/><text x="240" y="100" text-anchor="middle">Interrupt!</text><text x="240" y="116" text-anchor="middle" font-size="10">check register</text>
+        <rect x="340" y="20" width="120" height="44" rx="8" fill="#F6F2EA" stroke="#211E1B"/><text x="400" y="40" text-anchor="middle" font-size="11">Save state</text><text x="400" y="56" text-anchor="middle" font-size="10">→ stack</text>
+        <rect x="340" y="140" width="120" height="44" rx="8" fill="#F6E3E0" stroke="#9C3B2E"/><text x="400" y="166" text-anchor="middle">Run ISR</text>
+        <rect x="500" y="80" width="110" height="44" rx="8" fill="#E4F0E7" stroke="#2E7D4F"/><text x="555" y="100" text-anchor="middle" font-size="11">Restore state</text><text x="555" y="116" text-anchor="middle" font-size="10">resume</text>
+        <path d="M140 102 L178 102" stroke="#211E1B" stroke-width="2" marker-end="url(#b)"/>
+        <path d="M300 95 L338 55" stroke="#211E1B" stroke-width="2" marker-end="url(#b)"/>
+        <path d="M400 64 L400 138" stroke="#211E1B" stroke-width="2" marker-end="url(#b)"/>
+        <path d="M460 162 L500 120" stroke="#211E1B" stroke-width="2" marker-end="url(#b)"/>
+        <defs><marker id="b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#211E1B"/></marker></defs>
+      </svg>
+      <figcaption>Interrupt handling: state saved to the stack, ISR runs, then state restored.</figcaption>
+    </figure>
+
+    <h3>Scheduling</h3>
+    <p>The OS decides which process gets CPU time and for how long, to maximise use and keep the system responsive. Know these five algorithms:</p>
+    <table>
+      <tr><th>Algorithm</th><th>How it works</th></tr>
+      <tr><td><strong>Round Robin</strong></td><td>Each process gets a fixed <em>time slice</em> in turn; if not finished it goes to the back of the queue. Fair, but ignores priority/length.</td></tr>
+      <tr><td><strong>First Come First Served (FCFS)</strong></td><td>Processes run in arrival order until complete. Simple, but a long job blocks everything behind it.</td></tr>
+      <tr><td><strong>Shortest Job First (SJF)</strong></td><td>Runs the job with the shortest <em>total</em> time next. Needs to know job lengths in advance; long jobs may starve.</td></tr>
+      <tr><td><strong>Shortest Remaining Time (SRT)</strong></td><td>Runs the job with the shortest <em>remaining</em> time; <em>pre-emptive</em> — a newly arrived short job can interrupt.</td></tr>
+      <tr><td><strong>Multi-level Feedback Queues</strong></td><td>Several queues with different priorities; processes move between queues based on behaviour. Flexible but complex.</td></tr>
+    </table>
+
+    <h3>Types of operating system</h3>
+    <table>
+      <tr><th>Type</th><th>Key feature</th></tr>
+      <tr><td><strong>Distributed</strong></td><td>Runs across multiple networked computers, sharing the workload as one system.</td></tr>
+      <tr><td><strong>Embedded</strong></td><td>Built for a specific device with limited resources (e.g. washing machine); efficient, limited functions.</td></tr>
+      <tr><td><strong>Multi-tasking</strong></td><td>Runs several programs apparently at once using time-slicing.</td></tr>
+      <tr><td><strong>Multi-user</strong></td><td>Allows multiple users to access one system, sharing resources (uses scheduling to allocate fairly).</td></tr>
+      <tr><td><strong>Real Time</strong></td><td>Guarantees a response within a strict time limit (e.g. aircraft control, pacemaker).</td></tr>
+    </table>
+
+    <h3>BIOS, device drivers &amp; virtual machines</h3>
+    <ul>
+      <li><strong>BIOS (Basic Input/Output System):</strong> the first program run when a computer is switched on. It runs the <strong>POST</strong> (power-on self-test) to check hardware, then loads the operating system. Stored in ROM/flash.</li>
+      <li><strong>Device driver:</strong> software that allows the OS to communicate with and control a particular piece of hardware. OS-specific.</li>
+      <li><strong>Virtual machine:</strong> software that takes on the function of a machine — any instance where software emulates hardware. Includes running an OS within another OS, or executing <strong>intermediate code</strong> (e.g. Java bytecode on the JVM). Benefits: portability, isolation/sandboxing. Drawback: slower than running natively.</li>
+    </ul>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  </div>
+  <div class="wrap">
+
+  <!-- ===================== 1.2.2 ===================== -->
+  <section id="s122">
+    <span class="spec-no">1.2.2</span>
+    <h2 class="sec">Applications generation</h2>
+
+    <h3>Applications &amp; utilities <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>Application software</strong> — programs that let a <em>user</em> do a specific task (word processor, browser, game).</li>
+      <li><strong>Utility software</strong> — programs that help <em>maintain/optimise</em> the computer system: disk defragmenter, file management, backup, compression, antivirus, system clean-up.</li>
+    </ul>
+
+    <h3>Open source vs closed source <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th></th><th>Open source</th><th>Closed (proprietary)</th></tr>
+      <tr><td>Source code</td><td>Available — can view, modify, distribute</td><td>Hidden — compiled only</td></tr>
+      <tr><td>Cost</td><td>Usually free</td><td>Usually paid / licensed</td></tr>
+      <tr><td>Support</td><td>Community-based</td><td>Official vendor support</td></tr>
+      <tr><td>Examples</td><td>Linux, Firefox</td><td>Windows, Adobe Photoshop</td></tr>
+    </table>
+
+    <h3>Translators <span class="tag y1">Y1</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Translator:</span> a program that converts source code written by a programmer into machine code the processor can execute.</p></div>
+    <table>
+      <tr><th>Translator</th><th>What it does</th></tr>
+      <tr><td><strong>Compiler</strong></td><td>Translates the <em>whole</em> program into machine code in one go, producing an executable. Slow to compile, fast to run, errors reported all at end; runs without the source.</td></tr>
+      <tr><td><strong>Interpreter</strong></td><td>Translates and executes the program <em>line by line</em>. Easy to debug (stops at first error), platform-independent, but slower at run time and needs the interpreter present.</td></tr>
+      <tr><td><strong>Assembler</strong></td><td>Translates <em>assembly language</em> into machine code (roughly 1 instruction → 1 machine instruction).</td></tr>
+    </table>
+
+    <h3>Stages of compilation <span class="tag y2">Y2</span></h3>
+    <ol class="body">
+      <li><strong>Lexical analysis</strong> — removes whitespace/comments and converts the source into a series of <strong>tokens</strong>; builds a <em>symbol table</em> of identifiers.</li>
+      <li><strong>Syntax analysis</strong> — checks tokens against the rules (grammar) of the language; builds a parse/abstract syntax tree; reports syntax errors.</li>
+      <li><strong>Code generation</strong> — produces the object (machine) code equivalent of the program.</li>
+      <li><strong>Optimisation</strong> — makes the code run faster and/or use fewer resources (e.g. removing redundant instructions).</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 660 90" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif" font-size="12">
+        <g>
+          <rect x="14" y="28" width="120" height="40" rx="8" fill="#E4F0E7" stroke="#2E7D4F"/><text x="74" y="52" text-anchor="middle">Lexical</text>
+          <rect x="174" y="28" width="120" height="40" rx="8" fill="#EFF5F4" stroke="#0E5A54"/><text x="234" y="52" text-anchor="middle">Syntax</text>
+          <rect x="334" y="28" width="130" height="40" rx="8" fill="#F6E3E0" stroke="#9C3B2E"/><text x="399" y="52" text-anchor="middle">Code gen</text>
+          <rect x="504" y="28" width="140" height="40" rx="8" fill="#FFFBEF" stroke="#9A7B16"/><text x="574" y="52" text-anchor="middle">Optimisation</text>
+        </g>
+        <path d="M134 48 L172 48" stroke="#211E1B" stroke-width="2" marker-end="url(#c)"/>
+        <path d="M294 48 L332 48" stroke="#211E1B" stroke-width="2" marker-end="url(#c)"/>
+        <path d="M464 48 L502 48" stroke="#211E1B" stroke-width="2" marker-end="url(#c)"/>
+        <defs><marker id="c" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#211E1B"/></marker></defs>
+      </svg>
+    </figure>
+
+    <h3>Linkers, loaders &amp; libraries <span class="tag y2">Y2</span></h3>
+    <ul>
+      <li><strong>Library</strong> — pre-written, pre-compiled, tested code (modules) that can be reused in programs.</li>
+      <li><strong>Linker</strong> — combines the compiled program with any library modules it uses into one executable. <em>Static</em> linking copies code in; <em>dynamic</em> linking connects at run time (DLLs).</li>
+      <li><strong>Loader</strong> — part of the OS that copies the executable from disk into memory and prepares it to run.</li>
+    </ul>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.2.3 ===================== -->
+  <section id="s123">
+    <span class="spec-no">1.2.3</span>
+    <h2 class="sec">Software development <span class="tag y1">Y1</span></h2>
+    <p class="lead">You must be able to describe each methodology and <strong>justify which suits a given scenario</strong>.</p>
+    <table>
+      <tr><th>Methodology</th><th>How it works</th><th>Best when…</th></tr>
+      <tr><td><strong>Waterfall</strong></td><td>Linear sequence of stages (analysis → design → implementation → testing → maintenance); each finishes before the next starts.</td><td>Requirements are fixed and well understood; large, stable projects.</td></tr>
+      <tr><td><strong>Agile</strong></td><td>Umbrella for iterative approaches; software built in small increments with constant feedback and adaptation.</td><td>Requirements likely to change; client wants frequent working versions.</td></tr>
+      <tr><td><strong>Extreme Programming (XP)</strong></td><td>An agile method emphasising pair programming, very frequent releases, continuous testing and customer involvement.</td><td>Quality-critical projects needing close teamwork &amp; customer presence.</td></tr>
+      <tr><td><strong>Spiral</strong></td><td>Repeated cycles each including <strong>risk analysis</strong>; prototypes built and refined.</td><td>Large, high-risk, expensive projects where managing risk is vital.</td></tr>
+      <tr><td><strong>RAD</strong> (Rapid Application Development)</td><td>Fast development using <strong>prototypes</strong> and user feedback to refine the system.</td><td>Time-critical projects where a quick usable system matters more than perfect docs.</td></tr>
+    </table>
+    <div class="box exam"><span class="lab">How to answer the "justify" question</span>Name the method → state its key feature → link it to the <em>specific</em> need in the scenario (changing requirements? → Agile; safety-critical with high risk? → Spiral; fixed clear spec? → Waterfall).</div>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.2.4 ===================== -->
+  <section id="s124">
+    <span class="spec-no">1.2.4</span>
+    <h2 class="sec">Types of programming language</h2>
+
+    <h3>Programming paradigms <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Programming paradigm:</span> a style or approach to programming. Different problems suit different paradigms.</p></div>
+    <ul>
+      <li><strong>Procedural</strong> — instructions executed in sequence, grouped into procedures/functions (Python, C, VB).</li>
+      <li><strong>Object-oriented</strong> — program modelled as interacting objects (see OOP section).</li>
+      <li><strong>Low-level / assembly</strong> — closely matches the processor's machine instructions.</li>
+    </ul>
+
+    <h3>Procedural languages <span class="tag y1">Y1</span></h3>
+    <p>Programs are sequences of instructions, using the constructs <strong>sequence, selection and iteration</strong>, organised into reusable procedures and functions. Imperative: you tell the computer <em>how</em> to do something step by step.</p>
+
+    <h3>Assembly language &amp; the Little Man Computer <span class="tag y1">Y1</span></h3>
+    <p>Assembly is a low-level language using <strong>mnemonics</strong> (e.g. <code>ADD</code>, <code>STA</code>) with (typically) one assembly instruction per machine instruction. The <strong>Little Man Computer (LMC)</strong> is OCR's teaching instruction set.</p>
+    <table>
+      <tr><th>LMC</th><th>Meaning</th><th>LMC</th><th>Meaning</th></tr>
+      <tr><td><code>INP</code></td><td>Input → accumulator</td><td><code>STA</code></td><td>Store accumulator at address</td></tr>
+      <tr><td><code>OUT</code></td><td>Output from accumulator</td><td><code>LDA</code></td><td>Load from address → accumulator</td></tr>
+      <tr><td><code>ADD</code></td><td>Add to accumulator</td><td><code>BRA</code></td><td>Branch always (jump)</td></tr>
+      <tr><td><code>SUB</code></td><td>Subtract from accumulator</td><td><code>BRZ</code></td><td>Branch if zero</td></tr>
+      <tr><td><code>HLT</code></td><td>Stop</td><td><code>BRP</code></td><td>Branch if positive (≥0)</td></tr>
+    </table>
+
+    <h3>Addressing modes <span class="tag y2">Y2</span></h3>
+    <p>How the <em>operand</em> of an instruction is interpreted:</p>
+    <table>
+      <tr><th>Mode</th><th>The operand is…</th></tr>
+      <tr><td><strong>Immediate</strong></td><td>the actual value to use (constant). Fastest.</td></tr>
+      <tr><td><strong>Direct</strong></td><td>the <em>address</em> of the value in memory.</td></tr>
+      <tr><td><strong>Indirect</strong></td><td>the address of a location that <em>holds the address</em> of the value (a pointer). Allows access to more memory.</td></tr>
+      <tr><td><strong>Indexed</strong></td><td>a base address to which the value of an <strong>index register</strong> is added — useful for stepping through arrays.</td></tr>
+    </table>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  </div>
+  <div class="wrap">
+
+  <!-- ===================== 2.2.1 ===================== -->
+  <section id="s221">
+    <span class="spec-no">2.2.1</span>
+    <h2 class="sec">Programming techniques</h2>
+
+    <h3>The three constructs <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>Sequence</strong> — instructions executed one after another, in order.</li>
+      <li><strong>Selection (branching)</strong> — a choice between paths using <code>if</code>/<code>elseif</code>/<code>else</code> or <code>switch</code>/<code>case</code>.</li>
+      <li><strong>Iteration</strong> — repetition: <em>count-controlled</em> (<code>for</code>) or <em>condition-controlled</em> (<code>while</code>, <code>do…until</code>).</li>
+    </ul>
+
+    <h3>Global vs local variables <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th></th><th>Local</th><th>Global</th></tr>
+      <tr><td>Scope</td><td>Only inside the subroutine where declared</td><td>Whole program</td></tr>
+      <tr><td>Memory</td><td>Freed when subroutine ends</td><td>Held for program lifetime</td></tr>
+      <tr><td>Pros</td><td>Safer, reusable, no accidental clashes</td><td>Accessible everywhere</td></tr>
+      <tr><td>Cons</td><td>Not accessible outside</td><td>Can be changed anywhere → harder to debug</td></tr>
+    </table>
+
+    <h3>Modularity &amp; parameter passing <span class="tag y1">Y1</span></h3>
+    <p>Breaking a program into <strong>functions</strong> (return a value) and <strong>procedures</strong> (don't) makes code easier to write, test, reuse and maintain.</p>
+    <table>
+      <tr><th>By value</th><th>By reference</th></tr>
+      <tr><td>A <em>copy</em> of the data is passed. Changes inside the subroutine do <strong>not</strong> affect the original.</td><td>The <em>memory address</em> is passed. Changes inside the subroutine <strong>do</strong> affect the original.</td></tr>
+    </table>
+
+    <h3>Recursion <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Recursion:</span> a subroutine that <strong>calls itself</strong>. It must have a <strong>base case</strong> (a stopping condition) and must move towards it, or it will never terminate.</p></div>
+    <table>
+      <tr><th>Recursion</th><th>Iteration</th></tr>
+      <tr><td>Often shorter/more natural for some problems (e.g. trees, factorials)</td><td>Usually uses less memory</td></tr>
+      <tr><td>Uses the <strong>call stack</strong> — risk of <strong>stack overflow</strong></td><td>No stack-overflow risk</td></tr>
+      <tr><td>Can be harder to trace</td><td>Often easier to follow</td></tr>
+    </table>
+
+    <h3>IDE features <span class="tag y1">Y1</span></h3>
+    <p>An <strong>Integrated Development Environment</strong> bundles tools to write &amp; debug code: editor with <em>syntax highlighting</em> and auto-complete, error diagnostics, <strong>breakpoints</strong>, <em>step-through</em> execution, variable watch, and a built-in run/compile button.</p>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== OOP ===================== -->
+  <section id="oop">
+    <span class="spec-no">1.2.4(e) · 2.2.1(f)</span>
+    <h2 class="sec">Object-Oriented Programming <span class="tag y2">Y2</span></h2>
+    <p class="lead">OOP models a problem as a set of interacting <strong>objects</strong>, each bundling its own data and the operations on that data.</p>
+
+    <h3>The core vocabulary</h3>
+    <div class="def"><span class="lab">OCR Definition — Class</span><p><span class="term">Class:</span> a <strong>template/blueprint</strong> for creating objects. It defines the attributes and methods that its objects will have.</p></div>
+    <div class="def"><span class="lab">OCR Definition — Object</span><p><span class="term">Object:</span> an <strong>instance</strong> of a class, with its own state (attribute values) and behaviours.</p></div>
+    <div class="def"><span class="lab">OCR Definition — Attribute</span><p><span class="term">Attribute:</span> a variable belonging to a class/object that stores its <em>data/state</em>.</p></div>
+    <div class="def"><span class="lab">OCR Definition — Method</span><p><span class="term">Method:</span> a subroutine (function/procedure) belonging to a class that defines its <em>behaviour</em>.</p></div>
+
+    <h3>Encapsulation</h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Encapsulation:</span> keeping an object's attributes <strong>private</strong> and only allowing access through public methods (getters/setters). This protects data from invalid changes and hides internal detail.</p></div>
+
+    <h3>Inheritance</h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Inheritance:</span> a (sub/child) class <strong>inherits</strong> the attributes and methods of a (super/parent) class, then can add to or override them. Promotes <em>code reuse</em>.</p></div>
+
+    <h3>Polymorphism</h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Polymorphism:</span> objects of different (sub)classes can be treated as objects of a common parent class, with each responding to the <em>same method call</em> in its own way (e.g. each subclass overrides <code>speak()</code>).</p></div>
+
+    <figure>
+      <svg viewBox="0 0 560 290" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+        <rect x="190" y="14" width="180" height="92" rx="8" fill="#EFF5F4" stroke="#0E5A54" stroke-width="2"/>
+        <text x="280" y="34" text-anchor="middle" font-weight="700" fill="#0E5A54">Pet  (superclass)</text>
+        <line x1="190" y1="44" x2="370" y2="44" stroke="#0E5A54"/>
+        <text x="200" y="62" fill="#9C3B2E">- name</text>
+        <line x1="190" y1="72" x2="370" y2="72" stroke="#0E5A54"/>
+        <text x="200" y="90" fill="#211E1B">+ new(name)</text>
+        <text x="200" y="104" fill="#211E1B">+ speak()</text>
+
+        <line x1="200" y1="106" x2="120" y2="170" stroke="#211E1B" stroke-width="2"/>
+        <line x1="360" y1="106" x2="440" y2="170" stroke="#211E1B" stroke-width="2"/>
+        <text x="280" y="140" text-anchor="middle" fill="#4A453E">▲ inherits</text>
+
+        <rect x="20" y="172" width="200" height="100" rx="8" fill="#E4F0E7" stroke="#2E7D4F" stroke-width="2"/>
+        <text x="120" y="192" text-anchor="middle" font-weight="700" fill="#2E7D4F">Dog</text>
+        <line x1="20" y1="202" x2="220" y2="202" stroke="#2E7D4F"/>
+        <text x="30" y="220" fill="#9C3B2E">- breed</text>
+        <line x1="20" y1="230" x2="220" y2="230" stroke="#2E7D4F"/>
+        <text x="30" y="248" fill="#211E1B">+ speak()  → "Woof"</text>
+        <text x="30" y="264" fill="#4A453E">(overrides)</text>
+
+        <rect x="340" y="172" width="200" height="100" rx="8" fill="#F6E3E0" stroke="#9C3B2E" stroke-width="2"/>
+        <text x="440" y="192" text-anchor="middle" font-weight="700" fill="#9C3B2E">Cat</text>
+        <line x1="340" y1="202" x2="540" y2="202" stroke="#9C3B2E"/>
+        <text x="350" y="220" fill="#9C3B2E">- indoor</text>
+        <line x1="340" y1="230" x2="540" y2="230" stroke="#9C3B2E"/>
+        <text x="350" y="248" fill="#211E1B">+ speak()  → "Meow"</text>
+        <text x="350" y="264" fill="#4A453E">(overrides)</text>
+      </svg>
+      <figcaption>Inheritance + polymorphism: <code>Dog</code> and <code>Cat</code> inherit from <code>Pet</code> and each override <code>speak()</code> differently. <code>+</code> public, <code>-</code> private (encapsulation).</figcaption>
+    </figure>
+
+    <div class="box exam"><span class="lab">OCR pseudocode you must recognise</span></div>
+    <pre>class Pet
+  <span class="c">private name</span>
+  public procedure new(givenName)
+    name = givenName
+  endprocedure
+endclass
+
+class Dog <span style="color:#7FD1C4">inherits</span> Pet
+  private breed
+  public procedure new(givenName, givenBreed)
+    <span style="color:#7FD1C4">super.new(givenName)</span>   <span class="c">// call parent constructor</span>
+    breed = givenBreed
+  endprocedure
+endclass
+
+myDog = <span style="color:#7FD1C4">new</span> Dog("Fido", "Terrier")   <span class="c">// create an object</span></pre>
+    <div class="box tip"><span class="lab">Remember the keywords</span>Constructor = procedure named <code>new</code> · inheritance = <code>inherits</code> · call parent = <code>super.</code> · access = <code>public</code>/<code>private</code> · create object = <code>new ClassName(...)</code>.</div>
+
+    <h4>Why use OOP? (benefits)</h4>
+    <ul>
+      <li><strong>Reusability</strong> — classes &amp; inheritance reuse code.</li>
+      <li><strong>Maintainability</strong> — encapsulation localises changes.</li>
+      <li><strong>Modularity</strong> — objects are self-contained, easier to test &amp; develop in teams.</li>
+    </ul>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  </div>
+  <div class="wrap">
+
+  <!-- ===================== 1.3.1 ===================== -->
+  <section id="s131">
+    <span class="spec-no">1.3.1</span>
+    <h2 class="sec">Compression, encryption &amp; hashing</h2>
+
+    <h3>Compression <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th>Lossy</th><th>Lossless</th></tr>
+      <tr><td>Permanently removes some data; original <strong>cannot</strong> be fully recovered.</td><td>No data lost; original is <strong>perfectly</strong> reconstructed.</td></tr>
+      <tr><td>Much smaller files. Used for images/audio/video (JPEG, MP3) where small quality loss is acceptable.</td><td>Less reduction. Used where every bit matters (text, ZIP, PNG, software).</td></tr>
+    </table>
+
+    <h4>Lossless methods <span class="tag y2">Y2</span></h4>
+    <ul>
+      <li><strong>Run Length Encoding (RLE)</strong> — replaces <em>runs</em> of repeated values with one value + a count. Great for data with long repeats (e.g. simple images); useless if little repetition. <span class="mono">AAAAABBB → 5A3B</span></li>
+      <li><strong>Dictionary coding</strong> — frequently-occurring patterns are stored once in a <strong>dictionary</strong>; the data is replaced by shorter references (indexes) to the dictionary, which is sent with the file.</li>
+    </ul>
+
+    <h3>Encryption <span class="tag y2">Y2</span></h3>
+    <table>
+      <tr><th>Symmetric</th><th>Asymmetric</th></tr>
+      <tr><td>The <strong>same key</strong> encrypts and decrypts.</td><td>A <strong>key pair</strong>: a <em>public</em> key encrypts, the matching <em>private</em> key decrypts.</td></tr>
+      <tr><td>Fast, but the key must be shared securely (the key-distribution problem).</td><td>No need to share a secret key → solves key distribution; slower. Underpins HTTPS &amp; digital signatures.</td></tr>
+    </table>
+
+    <h3>Hashing <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Hashing:</span> applying an algorithm to an input to produce a fixed-size output (the <strong>hash</strong>). It is <strong>one-way</strong> — you cannot reverse the hash to get the original input.</p></div>
+    <p><strong>Uses:</strong> storing passwords securely (store the hash, not the password); fast lookup in a <strong>hash table</strong> (the hash gives the storage index); checking data integrity. A good hash function minimises <strong>collisions</strong> (two inputs giving the same hash).</p>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.3.2 ===================== -->
+  <section id="s132">
+    <span class="spec-no">1.3.2</span>
+    <h2 class="sec">Databases</h2>
+
+    <h3>Foundations <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>Flat file</strong> — a single table/file; simple but causes data redundancy &amp; inconsistency.</li>
+      <li><strong>Relational database</strong> — data split across linked tables (entities); reduces redundancy.</li>
+      <li><strong>Primary key</strong> — uniquely identifies each record in a table.</li>
+      <li><strong>Foreign key</strong> — a primary key from one table used in another to <em>link</em> the tables.</li>
+      <li><strong>Secondary key</strong> — an alternative field used for fast searching/sorting (an index on a non-key field).</li>
+    </ul>
+
+    <h4>Entity relationship (ER) modelling</h4>
+    <figure>
+      <svg viewBox="0 0 600 130" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif" font-size="13">
+        <rect x="30" y="45" width="130" height="44" rx="8" fill="#EFF5F4" stroke="#0E5A54" stroke-width="2"/><text x="95" y="72" text-anchor="middle">Customer</text>
+        <rect x="430" y="45" width="130" height="44" rx="8" fill="#E4F0E7" stroke="#2E7D4F" stroke-width="2"/><text x="495" y="72" text-anchor="middle">Order</text>
+        <line x1="160" y1="67" x2="430" y2="67" stroke="#211E1B" stroke-width="2"/>
+        <text x="170" y="60" font-size="14" font-weight="700" fill="#9C3B2E">1</text>
+        <text x="412" y="60" font-size="14" font-weight="700" fill="#9C3B2E">M</text>
+        <text x="295" y="60" text-anchor="middle" font-size="11" fill="#4A453E">places</text>
+      </svg>
+      <figcaption>One-to-many (1:M): one customer places many orders. Relationships are 1:1, 1:M or M:M.</figcaption>
+    </figure>
+
+    <h3>Capturing, selecting, managing &amp; exchanging data <span class="tag y1">Y1</span></h3>
+    <p><strong>Capture:</strong> forms, OCR, OMR, sensors. <strong>Select:</strong> Query By Example, SQL. <strong>Manage:</strong> add/edit/delete/process. <strong>Exchange:</strong> common formats like CSV, JSON, XML.</p>
+
+    <h3>Normalisation to 3NF <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Normalisation:</span> organising data in a database to reduce redundancy and improve integrity.</p></div>
+    <table>
+      <tr><th>Form</th><th>Rule</th></tr>
+      <tr><td><strong>1NF</strong></td><td>No repeating groups; each cell holds a single (atomic) value; each record unique.</td></tr>
+      <tr><td><strong>2NF</strong></td><td>In 1NF <em>and</em> no partial dependencies — every non-key attribute depends on the <em>whole</em> primary key.</td></tr>
+      <tr><td><strong>3NF</strong></td><td>In 2NF <em>and</em> no non-key attribute depends on another non-key attribute (no transitive dependencies).</td></tr>
+    </table>
+    <div class="box tip"><span class="lab">One-liner for the exam</span>3NF = "every non-key attribute depends on <strong>the key, the whole key, and nothing but the key</strong>."</div>
+
+    <h3>SQL — interpret &amp; modify <span class="tag y2">Y2</span></h3>
+    <pre><span class="c">-- select</span>
+SELECT Name, Grade FROM Student
+WHERE Grade &gt; 60
+ORDER BY Name ASC;
+
+<span class="c">-- join two tables</span>
+SELECT Customer.Name, Order.Total
+FROM Customer
+INNER JOIN Order ON Customer.ID = Order.CustomerID;
+
+INSERT INTO Student (Name, Grade) VALUES ("Aisha", 72);
+UPDATE Student SET Grade = 80 WHERE Name = "Aisha";
+DELETE FROM Student WHERE Grade &lt; 40;</pre>
+
+    <h3>Referential integrity <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Referential integrity:</span> ensuring that a foreign key value always refers to an existing, valid record in the related table — so you can't reference data that doesn't exist.</p></div>
+
+    <h3>Transactions &amp; ACID <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Transaction processing</span> must satisfy <span class="term">ACID</span>:</p></div>
+    <table>
+      <tr><td><strong>A — Atomicity</strong></td><td>A transaction is all-or-nothing; if any part fails, the whole thing is rolled back.</td></tr>
+      <tr><td><strong>C — Consistency</strong></td><td>A transaction leaves the database in a valid state, obeying all rules.</td></tr>
+      <tr><td><strong>I — Isolation</strong></td><td>Concurrent transactions don't interfere; results are as if run one at a time.</td></tr>
+      <tr><td><strong>D — Durability</strong></td><td>Once committed, changes are permanent, even after a crash/power loss.</td></tr>
+    </table>
+    <p><strong>Record locking</strong> stops two users editing the same record at once (preventing lost updates); <strong>redundancy</strong> (backups/replication) protects against data loss.</p>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.3.4 ===================== -->
+  <section id="s134">
+    <span class="spec-no">1.3.4</span>
+    <h2 class="sec">Web technologies</h2>
+
+    <h3>HTML, CSS &amp; JavaScript <span class="tag y1">Y1</span></h3>
+    <ul>
+      <li><strong>HTML</strong> — defines the <em>structure/content</em> of a web page (headings, paragraphs, links, images).</li>
+      <li><strong>CSS</strong> — defines the <em>style/presentation</em> (colours, fonts, layout); keeps styling separate &amp; reusable.</li>
+      <li><strong>JavaScript</strong> — adds <em>interactivity/behaviour</em>, run client-side in the browser.</li>
+    </ul>
+
+    <h3>Search engine indexing <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">Search engine indexing:</span> the process of <strong>crawling</strong> web pages (following links with "spiders"/bots) and storing key information (keywords, meta-data, links) in an <strong>index</strong> so results can be returned quickly.</p></div>
+
+    <h3>PageRank algorithm <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition</span><p><span class="term">PageRank:</span> an algorithm that ranks pages by <em>importance</em>, based on the <strong>number and quality of inbound links</strong>. A link from a high-ranking page counts for more than one from a low-ranking page.</p></div>
+    <p>Key idea: a page's rank is shared out among the pages it links to. More incoming links from important pages → higher PageRank → higher in results.</p>
+
+    <h3>Server-side vs client-side processing <span class="tag y2">Y2</span></h3>
+    <table>
+      <tr><th>Client-side (e.g. JavaScript)</th><th>Server-side (e.g. PHP)</th></tr>
+      <tr><td>Runs in the user's browser; fast response, reduces server load; but code is visible &amp; depends on the device.</td><td>Runs on the web server; secure (code hidden), can access databases; but adds server load &amp; needs a round-trip.</td></tr>
+    </table>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  </div>
+  <div class="wrap">
+
+  <!-- ===================== 1.4.1 ===================== -->
+  <section id="s141">
+    <span class="spec-no">1.4.1</span>
+    <h2 class="sec">Data types &amp; number representation</h2>
+
+    <h3>Primitive data types <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th>Type</th><th>Holds</th></tr>
+      <tr><td><strong>Integer</strong></td><td>Whole numbers</td></tr>
+      <tr><td><strong>Real / float</strong></td><td>Numbers with a fractional part</td></tr>
+      <tr><td><strong>Character</strong></td><td>A single symbol</td></tr>
+      <tr><td><strong>String</strong></td><td>A sequence of characters</td></tr>
+      <tr><td><strong>Boolean</strong></td><td>True / False</td></tr>
+    </table>
+
+    <h3>Binary, hex &amp; conversion <span class="tag y1">Y1</span></h3>
+    <p>Place values (8-bit): <span class="mono">128 64 32 16 8 4 2 1</span>. Hex groups binary into <strong>nibbles</strong> (4 bits).</p>
+    <div class="box exam"><span class="lab">Worked — denary → binary → hex</span>
+    <p><strong>77</strong> = 64 + 8 + 4 + 1 → <span class="mono">0100 1101</span><br>
+    Group in 4s: <span class="mono">0100 = 4</span>, <span class="mono">1101 = 13 = D</span> → hex <strong>4D</strong></p></div>
+
+    <h3>Negative numbers <span class="tag y1">Y1</span></h3>
+    <h4>Sign &amp; magnitude</h4>
+    <p>Leftmost bit = sign (0 = +, 1 = −), remaining bits = magnitude. <span class="mono">1000 0101</span> = −5. <em>Problem:</em> two zeros (+0 and −0) and arithmetic is awkward.</p>
+    <h4>Two's complement (preferred)</h4>
+    <div class="box exam"><span class="lab">Worked — represent −5 in 8 bits</span>
+    <p>+5 = <span class="mono">0000 0101</span> → flip all bits → <span class="mono">1111 1010</span> → add 1 → <strong><span class="mono">1111 1011</span></strong></p>
+    <p>The leftmost place value is <em>negative</em>: −128 64 32 16 8 4 2 1. Check: −128+64+32+16+8+2+1 = −5 ✓</p></div>
+
+    <h3>Binary addition &amp; subtraction <span class="tag y1">Y1</span></h3>
+    <div class="box exam"><span class="lab">Worked — subtraction by adding the two's complement</span>
+    <pre>  9 - 5  =  9 + (-5)
+
+   0000 1001   ( 9)
+ + 1111 1011   (-5)
+ -----------
+ 1 0000 0100   carry out of the 8th bit is DISCARDED
+   ---------
+   0000 0100   = 4  ✓</pre></div>
+    <div class="box tip"><span class="lab">Overflow</span>If a carry changes the sign bit incorrectly (result won't fit in the bits available), that's <strong>overflow</strong> — the answer is wrong.</div>
+
+    <h3>Floating point: representation &amp; normalisation <span class="tag y1">Y1</span></h3>
+    <p>A real number is stored as a <strong>mantissa</strong> (the digits) and an <strong>exponent</strong> (where the binary point goes), both in <strong>two's complement</strong> in the OCR exam.</p>
+    <figure>
+      <svg viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="13">
+        <rect x="40" y="30" width="260" height="36" fill="#E4F0E7" stroke="#2E7D4F" stroke-width="2"/>
+        <text x="170" y="22" text-anchor="middle" font-size="12" fill="#2E7D4F">MANTISSA</text>
+        <text x="170" y="54" text-anchor="middle">0.1011010</text>
+        <rect x="300" y="30" width="180" height="36" fill="#F6E3E0" stroke="#9C3B2E" stroke-width="2"/>
+        <text x="390" y="22" text-anchor="middle" font-size="12" fill="#9C3B2E">EXPONENT</text>
+        <text x="390" y="54" text-anchor="middle">0011</text>
+      </svg>
+      <figcaption>Value = mantissa × 2<sup>exponent</sup>. More mantissa bits → more <em>precision</em>; more exponent bits → larger <em>range</em>.</figcaption>
+    </figure>
+    <div class="def"><span class="lab">OCR Definition — Normalisation</span><p><span class="term">Normalised floating point:</span> the mantissa is adjusted so it starts with <code>0.1…</code> for a <strong>positive</strong> number, or <code>1.0…</code> for a <strong>negative</strong> number (the first two bits differ). This gives the maximum precision for the bits available.</p></div>
+
+    <h3>Floating point arithmetic <span class="tag y2">Y2</span></h3>
+    <p>To add/subtract: <strong>align the exponents</strong> (shift the smaller number's mantissa so both exponents match), add/subtract the mantissas, then <strong>re-normalise</strong> the result.</p>
+
+    <h3>Bitwise manipulation &amp; masks <span class="tag y2">Y2</span></h3>
+    <ul>
+      <li><strong>Logical shift left/right</strong> — bits move; zeros fill in. Shift left by 1 ≈ ×2; shift right by 1 ≈ ÷2.</li>
+      <li><strong>Mask</strong> — a binary pattern combined with data using AND/OR/XOR to read or change specific bits.</li>
+    </ul>
+    <div class="box exam"><span class="lab">Worked — masking with AND/OR/XOR</span>
+    <pre>Data:   1011 0110
+AND 0000 1111  → 0000 0110   isolate (keep) the low nibble
+OR  0000 1111  → 1011 1111   set the low nibble to 1s
+XOR 1111 1111  → 0100 1001   flip every bit</pre></div>
+
+    <h3>Character sets <span class="tag y1">Y1</span></h3>
+    <table>
+      <tr><th>ASCII</th><th>Unicode</th></tr>
+      <tr><td>7-bit (often 8) → 128 characters. Enough for English letters, digits, basic symbols.</td><td>Up to 32-bit → 1M+ characters. Represents (nearly) every language &amp; emoji; uses more storage.</td></tr>
+    </table>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <!-- ===================== 1.4.3 ===================== -->
+  <section id="s143">
+    <span class="spec-no">1.4.3</span>
+    <h2 class="sec">Boolean algebra</h2>
+
+    <h3>Logic gates &amp; truth tables <span class="tag y1">Y1</span></h3>
+    <figure>
+      <svg viewBox="0 0 620 150" xmlns="http://www.w3.org/2000/svg" font-family="Spline Sans, sans-serif" font-size="12">
+        <!-- AND -->
+        <path d="M40 40 L70 40 A25 25 0 0 1 70 90 L40 90 Z" fill="#fff" stroke="#0E5A54" stroke-width="2"/>
+        <line x1="20" y1="52" x2="40" y2="52" stroke="#211E1B" stroke-width="2"/><line x1="20" y1="78" x2="40" y2="78" stroke="#211E1B" stroke-width="2"/><line x1="95" y1="65" x2="115" y2="65" stroke="#211E1B" stroke-width="2"/>
+        <text x="62" y="120" text-anchor="middle" font-weight="700" fill="#0E5A54">AND</text>
+        <!-- OR -->
+        <path d="M160 40 Q185 65 160 90 Q200 90 215 65 Q200 40 160 40 Z" fill="#fff" stroke="#0E5A54" stroke-width="2"/>
+        <line x1="142" y1="52" x2="170" y2="52" stroke="#211E1B" stroke-width="2"/><line x1="142" y1="78" x2="170" y2="78" stroke="#211E1B" stroke-width="2"/><line x1="213" y1="65" x2="233" y2="65" stroke="#211E1B" stroke-width="2"/>
+        <text x="188" y="120" text-anchor="middle" font-weight="700" fill="#0E5A54">OR</text>
+        <!-- NOT -->
+        <path d="M285 45 L285 85 L320 65 Z" fill="#fff" stroke="#0E5A54" stroke-width="2"/>
+        <circle cx="326" cy="65" r="5" fill="#fff" stroke="#0E5A54" stroke-width="2"/>
+        <line x1="265" y1="65" x2="285" y2="65" stroke="#211E1B" stroke-width="2"/><line x1="331" y1="65" x2="351" y2="65" stroke="#211E1B" stroke-width="2"/>
+        <text x="308" y="120" text-anchor="middle" font-weight="700" fill="#0E5A54">NOT</text>
+        <!-- XOR -->
+        <path d="M410 40 Q435 65 410 90 Q450 90 465 65 Q450 40 410 40 Z" fill="#fff" stroke="#9C3B2E" stroke-width="2"/>
+        <path d="M400 40 Q425 65 400 90" fill="none" stroke="#9C3B2E" stroke-width="2"/>
+        <line x1="386" y1="52" x2="408" y2="52" stroke="#211E1B" stroke-width="2"/><line x1="386" y1="78" x2="408" y2="78" stroke="#211E1B" stroke-width="2"/><line x1="463" y1="65" x2="483" y2="65" stroke="#211E1B" stroke-width="2"/>
+        <text x="438" y="120" text-anchor="middle" font-weight="700" fill="#9C3B2E">XOR</text>
+      </svg>
+      <figcaption>The four gates you must recognise and draw.</figcaption>
+    </figure>
+    <table>
+      <tr><th>A</th><th>B</th><th>A·B (AND)</th><th>A+B (OR)</th><th>A⊕B (XOR)</th><th>Ā (NOT A)</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    </table>
+    <p class="lead" style="font-size:15px">Notation: AND = <span class="mono">A·B</span> or <span class="mono">A∧B</span> · OR = <span class="mono">A+B</span> or <span class="mono">A∨B</span> · NOT = <span class="mono">Ā</span> or <span class="mono">¬A</span> · XOR = <span class="mono">A⊕B</span>.</p>
+
+    <h3>The simplification laws <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition — De Morgan's Laws</span><p><span class="mono">¬(A ∧ B) ≡ ¬A ∨ ¬B</span> &nbsp;&nbsp; and &nbsp;&nbsp; <span class="mono">¬(A ∨ B) ≡ ¬A ∧ ¬B</span><br><em>"Break the bar, change the sign."</em></p></div>
+    <table>
+      <tr><th>Law</th><th>Rule</th></tr>
+      <tr><td><strong>Distribution</strong></td><td>A·(B+C) ≡ A·B + A·C</td></tr>
+      <tr><td><strong>Association</strong></td><td>(A·B)·C ≡ A·(B·C)</td></tr>
+      <tr><td><strong>Commutation</strong></td><td>A·B ≡ B·A &nbsp;and&nbsp; A+B ≡ B+A</td></tr>
+      <tr><td><strong>Double negation</strong></td><td>¬(¬A) ≡ A</td></tr>
+    </table>
+
+    <h3>Karnaugh maps <span class="tag y1">Y1</span></h3>
+    <p>A K-map simplifies a Boolean expression visually. Plot 1s, then group adjacent 1s in blocks of <strong>powers of two</strong> (1,2,4,8…). Groups <strong>wrap around</strong> edges. Bigger groups = simpler terms. (Gray-code column/row order: 00, 01, 11, 10.)</p>
+    <figure>
+      <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="13">
+        <text x="20" y="30" font-size="12" fill="#4A453E">AB \ CD</text>
+        <text x="120" y="30">00</text><text x="170" y="30">01</text><text x="220" y="30">11</text><text x="270" y="30">10</text>
+        <text x="40" y="62">00</text><text x="40" y="102">01</text><text x="40" y="142">11</text><text x="40" y="182">10</text>
+        <g stroke="#211E1B" fill="none"><rect x="100" y="40" width="200" height="160"/>
+          <line x1="150" y1="40" x2="150" y2="200"/><line x1="200" y1="40" x2="200" y2="200"/><line x1="250" y1="40" x2="250" y2="200"/>
+          <line x1="100" y1="80" x2="300" y2="80"/><line x1="100" y1="120" x2="300" y2="120"/><line x1="100" y1="160" x2="300" y2="160"/></g>
+        <!-- group of four highlighted -->
+        <rect x="103" y="123" width="94" height="74" rx="10" fill="none" stroke="#9C3B2E" stroke-width="3"/>
+        <text x="123" y="66" text-anchor="middle">0</text><text x="173" y="66" text-anchor="middle">0</text><text x="223" y="66" text-anchor="middle">0</text><text x="273" y="66" text-anchor="middle">0</text>
+        <text x="123" y="106" text-anchor="middle">0</text><text x="173" y="106" text-anchor="middle">0</text><text x="223" y="106" text-anchor="middle">0</text><text x="273" y="106" text-anchor="middle">0</text>
+        <text x="123" y="146" text-anchor="middle" fill="#9C3B2E">1</text><text x="173" y="146" text-anchor="middle" fill="#9C3B2E">1</text><text x="223" y="146" text-anchor="middle">0</text><text x="273" y="146" text-anchor="middle">0</text>
+        <text x="123" y="186" text-anchor="middle" fill="#9C3B2E">1</text><text x="173" y="186" text-anchor="middle" fill="#9C3B2E">1</text><text x="223" y="186" text-anchor="middle">0</text><text x="273" y="186" text-anchor="middle">0</text>
+      </svg>
+      <figcaption>A group of four 1s simplifies to a single two-variable term (here, A·¬C).</figcaption>
+    </figure>
+
+    <h3>Adders &amp; the D-type flip-flop <span class="tag y2">Y2</span></h3>
+    <div class="def"><span class="lab">OCR Definition — Half adder</span><p>Adds two single bits, outputting a <strong>Sum</strong> (A ⊕ B) and a <strong>Carry</strong> (A · B). It <em>cannot</em> accept a carry in.</p></div>
+    <div class="def"><span class="lab">OCR Definition — Full adder</span><p>Adds two bits <em>plus</em> a <strong>carry-in</strong>, giving Sum and Carry-out. Full adders chain together to add multi-bit numbers.</p></div>
+    <table>
+      <tr><th>A</th><th>B</th><th>Sum</th><th>Carry</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    </table>
+    <div class="def"><span class="lab">OCR Definition — D-type flip-flop</span><p>A <strong>edge-triggered</strong> memory circuit that stores one bit. On the <em>clock pulse</em> (edge), output Q takes the value of input D and holds it until the next pulse. Flip-flops are the building blocks of registers and counters.</p></div>
+    <a class="back" href="#s111">↑ contents</a>
+  </section>
+
+  <footer>
+    <p><strong>OCR A-Level Computer Science (H446) · Component 01 study guide.</strong> Definitions phrased to match OCR's own subject-content clarification guidance. <span class="tag y1" style="vertical-align:middle">Y1</span> = AS-spec content, <span class="tag y2" style="vertical-align:middle">Y2</span> = A-level-only — the formal spec split, not a guess at what you've personally covered.</p>
+    <p style="margin-top:12px">Pair this with PMT (physicsandmathstutor.com) topic notes &amp; past papers, and Save My Exams flashcards for spaced recall. Good luck in the mocks — In sha Allah you smash them.</p>
+  </footer>
+
+  </div>
+</body>
+</html>
